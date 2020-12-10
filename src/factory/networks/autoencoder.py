@@ -11,8 +11,9 @@ from pl_bolts.datasets import DummyDataset
 
 class LitManualAutoEncoder(pl.LightningModule):
 
-    def __init__(self):
+    def __init__(self,cfg):
         super().__init__()
+        self.cfg = cfg
         self.encoder = nn.Sequential(nn.Linear(28 * 28, 128), nn.ReLU(), nn.Linear(128, 3))
         self.decoder = nn.Sequential(nn.Linear(3, 128), nn.ReLU(), nn.Linear(128, 28 * 28))
 
@@ -43,7 +44,7 @@ class LitManualAutoEncoder(pl.LightningModule):
         z = self.encoder(x)
         x_hat = self.decoder(z)
         loss = F.mse_loss(x_hat, x)
-        self.log('val_loss', loss)
+        self.log('val_loss', loss,prog_bar=True)
         # --------------------------
 
     def test_step(self, batch, batch_idx):
