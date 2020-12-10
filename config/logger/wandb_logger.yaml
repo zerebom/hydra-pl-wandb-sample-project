@@ -1,0 +1,8 @@
+# @package _group_
+_target_: pytorch_lightning.loggers.WandbLogger
+name: ${name}
+project: ${project}
+tags:
+  - sample
+  - autoencoder
+

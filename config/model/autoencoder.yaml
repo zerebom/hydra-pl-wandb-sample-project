@@ -1,0 +1,6 @@
+# @package _group_
+instance:
+    _target_: src.factory.networks.autoencoder.LitManualAutoEncoder
+# optimizer:
+#     _target_: torch.optim.Adam
+#     lr: 1e-3
