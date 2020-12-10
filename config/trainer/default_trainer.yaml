@@ -1,0 +1,10 @@
+# @package _group_
+metric: val_loss
+mode: min
+args:
+  max_epochs: 3
+  gpus: ${env.gpus}
+  # weights_summary: top
+  distributed_backend: ddp
+  progress_bar_refresh_rate: 20
+  automatic_optimization: False

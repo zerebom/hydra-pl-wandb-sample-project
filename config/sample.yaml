@@ -1,0 +1,16 @@
+defaults:
+  - model: autoencoder
+  - logger: wandb_logger
+  - callbacks: default_callbacks
+  - env: default_env
+  - data: default_data
+  - trainer: default_trainer
+
+project: sample-project
+name: simple-auto-encoder
+version: 1
+
+hydra:
+  run:
+    dir: ${env.save_dir}
+

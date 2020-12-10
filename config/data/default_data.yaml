@@ -1,0 +1,4 @@
+# @package _group_
+data_shape: [1,28,28]
+num_samples: 1
+batch_size: 8

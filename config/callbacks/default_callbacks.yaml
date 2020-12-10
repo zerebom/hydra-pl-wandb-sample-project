@@ -1,0 +1,13 @@
+# @package _group_
+EarlyStopping:
+  _target_: pytorch_lightning.callbacks.EarlyStopping
+  monitor: ${trainer.metric}
+  patience: 5
+  mode: ${trainer.mode}
+
+ModelCheckpoint:
+  _target_: pytorch_lightning.callbacks.ModelCheckpoint
+  monitor: ${trainer.metric}
+  save_top_k: 2
+  filepath: saved_models/{epoch}_{val_loss:.4f}
+  mode: ${trainer.mode}
