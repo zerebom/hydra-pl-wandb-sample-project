@@ -1,13 +1,7 @@
-
-import os
-
 import torch
 from torch import nn
 from torch.nn import functional as F
-from torch.utils.data import DataLoader, random_split
 import pytorch_lightning as pl
-from pytorch_lightning.metrics.functional import accuracy
-from pl_bolts.datasets import DummyDataset
 
 class LitManualAutoEncoder(pl.LightningModule):
 
@@ -16,6 +10,10 @@ class LitManualAutoEncoder(pl.LightningModule):
         self.cfg = cfg
         self.encoder = nn.Sequential(nn.Linear(28 * 28, 128), nn.ReLU(), nn.Linear(128, 3))
         self.decoder = nn.Sequential(nn.Linear(3, 128), nn.ReLU(), nn.Linear(128, 28 * 28))
+
+    def forward(self, x):
+        x = x.view(x.size(0), -1)
+        return self.decoder(self.encoder(x))
 
     def training_step(self, batch, batch_idx):
         # --------------------------

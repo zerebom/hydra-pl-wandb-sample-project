@@ -8,9 +8,9 @@ from hydra.utils import instantiate
 from src.factory.dataset import DataModule
 warnings.filterwarnings("ignore")
 
-@hydra.main(config_path='../config', config_name='sample')
+@hydra.main(config_path='../config', config_name='default_config')
 def train(cfg: DictConfig) -> None:
-    model = instantiate(cfg.model.instance)
+    model = instantiate(cfg.model.instance,cfg=cfg)
 
     dm = DataModule(cfg.data)
     dm.setup()
@@ -20,12 +20,13 @@ def train(cfg: DictConfig) -> None:
 
     early_stopping = instantiate(cfg.callbacks.EarlyStopping)
     model_checkpoint = instantiate(cfg.callbacks.ModelCheckpoint)
+    wandb_image_logger = instantiate(cfg.callbacks.WandbImageLogger,
+                            val_imgs=next(iter(dm.val_dataloader()))[0])
 
     trainer = pl.Trainer(
         logger = wandb_logger,
         checkpoint_callback = model_checkpoint,
-        #wandb_callback
-        callbacks=[early_stopping],
+        callbacks=[early_stopping,wandb_image_logger],
         **cfg.trainer.args,
     )
 
