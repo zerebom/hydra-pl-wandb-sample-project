@@ -1,4 +1,5 @@
 # hydra-pl-wandb-sample-project
+hydra-pl-wandb-sample-project is a NN experiment management code using hydra, pytorch-lightinig, and wandb.
 
 ### directory
 ```
